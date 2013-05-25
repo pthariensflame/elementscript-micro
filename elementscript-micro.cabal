@@ -6,7 +6,7 @@ version:             0.0.0.0
 stability:           alpha
 synopsis:            A minimal Elementscript variant with which to experiment with infix homoiconicity.
 -- description:         
--- homepage:            
+homepage:            https://github.com/pthariensflame/elementscript-micro
 license:             BSD3
 license-file:        LICENSE
 author:              Alexander Altman
@@ -18,7 +18,8 @@ cabal-version:       >= 1.8
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Language.Elementsong.Micro
+  exposed-modules:     Language.Elementsong.Micro,
+                       Language.Elementsong.Micro.Values
   build-depends:       base, text, pipes, containers
   ghc-options:         -Wall
 

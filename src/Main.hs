@@ -8,4 +8,4 @@ import Control.Proxy.Trans.State
 import Language.Elementsong.Micro
 
 main :: IO ()
-main = runProxy $ stdinST >-> tokenize >-> evalStateK initialEvalState evaluate
+main = runProxy $ stdinST >-> evalStateK initialEvalState execute

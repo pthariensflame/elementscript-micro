@@ -1,7 +1,10 @@
-{-# LANGUAGE OverloadedStrings #-}
-module Language.Elementscript.Micro (tokenize,
-                                     EvalState(..),
+{-# LANGUAGE OverloadedStrings, ScopedTypeVariables #-}
+module Language.Elementscript.Micro (-- * Simple Interface
                                      initialEvalState,
+                                     execute,
+                                     -- * Complex Interface
+                                     module Language.Elementscript.Micro.Values,
+                                     EvalState(..),
                                      evaluate,
                                      -- * Text/Pipes Utilities
                                      stdinST,
@@ -12,26 +15,27 @@ import qualified Data.Text.IO as Text
 import Data.String (IsString(..))
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
-import Data.IntMap.Strict (Map)
-import qualified Data.Map.Strict as IntMap
+import Data.IntMap.Strict (IntMap)
+import qualified Data.IntMap.Strict as IntMap
 import Data.Sequence (Seq)
 import qualified Data.Sequence as Seq
-import Data.Set (Set)
-import qualified Data.Set as Set
 import Control.Proxy
 import Control.Proxy.Trans.State
+import Text.Show
+import Text.Read
+import Language.Elementscript.Micro.Values
 
-tokenize :: Text -> Seq Text
-tokenize = S.fromList . T.words
-{-# INLINABLE tokenize #-}
-
-data EvalState p = ES { varMap :: Map Text (Seq Text -> () -> ), 
-                        precedenceList :: IntMap (Set Text) }
+data EvalState = ES { valMap :: Map Text (EvalState -> IO (Val, EvalState)),
+                      precedenceList :: IntMap Text }
 
 initialEvalState :: EvalState
-initialEvalState = ES {  }
+initialEvalState = ES { varMap = Map.fromList [("", ),
+                                               ("", )], 
+                        precedenceList = IntMap.fromList [(, ""),
+                                                          (, "")]}
 
-evaluate :: (Proxy p) => () -> Consumer (StateP (EvalState p) p) (Seq Text) IO ()
+execute :: (Proxy p) => () -> Consumer (StateP EvalState p) Text IO ()
+execute () = do 
 
 stdinST :: (Proxy p) => () -> Producer p Text IO r
 stdinST () = runIdentityP . forever $ do str <- lift Text.getLine
