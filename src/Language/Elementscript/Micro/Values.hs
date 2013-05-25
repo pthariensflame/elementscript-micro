@@ -23,7 +23,7 @@ instance Show PrimVal where
   showsPrec d (PrimText t) = showsPrec d $ Text.unpack t
 
 instance Read PrimVal where
-  readPrec = fmap PrimInt readPrec ++ fmap (PrimText . Text.pack) readPrec
+  readPrec = fmap PrimInt readPrec +++ fmap (PrimText . Text.pack) readPrec
   readListPrec = readListPrecDefault
 
 instance IsString PrimVal where
@@ -37,4 +37,4 @@ data OpTree = Variable { varName :: Text }
             | LeftSection { leftSubtree :: OpTree, 
                             opSubtree :: OpTree }
             | RightSection { opSubtree :: OpTree,
-                             rightSubtree :: OpTree }
+                             rightSubtree :: OpTree } deriving (Eq, Read, Show)

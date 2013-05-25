@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, ScopedTypeVariables #-}
+{-# LANGUAGE OverloadedStrings #-}
 module Language.Elementscript.Micro (-- * Simple Interface
                                      initialEvalState,
                                      execute,
