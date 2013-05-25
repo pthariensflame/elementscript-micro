@@ -21,18 +21,42 @@ import Data.Sequence (Seq)
 import qualified Data.Sequence as Seq
 import Control.Proxy
 import Control.Proxy.Trans.State
-import Text.Show
-import Text.Read
 import Language.Elementscript.Micro.Values
 
 data EvalState = ES { valMap :: Map Text (EvalState -> IO (Val, EvalState)),
                       precedenceList :: IntMap Text }
 
 initialEvalState :: EvalState
-initialEvalState = ES { varMap = Map.fromList [("", ),
-                                               ("", )], 
-                        precedenceList = IntMap.fromList [(, ""),
-                                                          (, "")]}
+initialEvalState = ES { varMap = Map.fromList [("(", ),
+                                               (")", ),
+                                               ("[", ),
+                                               ("]", ),
+                                               ("{", ),
+                                               ("}", ),
+                                               (",", ),
+                                               (":", ),
+                                               ("eval", ),
+                                               ("proc", ),
+                                               ("macro", ),
+                                               ("tmacro", ),
+                                               ("list", ),,
+                                               ("app", ),,
+                                               ("apply", )],
+                        precedenceList = IntMap.fromList [(0, "("),
+                                                          (1, ")"),
+                                                          (, "["),
+                                                          (, "]"),
+                                                          (, "{"),
+                                                          (, "}"),
+                                                          (, ","),
+                                                          (, ":"),
+                                                          (, "eval"),
+                                                          (, "proc"),
+                                                          (, "macro"),
+                                                          (, "tmacro"),
+                                                          (, "list"),
+                                                          (, "app"),
+                                                          (, "apply")]}
 
 execute :: (Proxy p) => () -> Consumer (StateP EvalState p) Text IO ()
 execute () = do 
