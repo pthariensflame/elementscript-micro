@@ -27,36 +27,12 @@ data EvalState = ES { valMap :: Map Text (EvalState -> IO (Val, EvalState)),
                       precedenceList :: IntMap Text }
 
 initialEvalState :: EvalState
-initialEvalState = ES { valMap = Map.fromList [("(", ),
-                                               (")", ),
-                                               ("[", ),
-                                               ("]", ),
-                                               ("{", ),
-                                               ("}", ),
-                                               (",", ),
-                                               (":", ),
-                                               ("eval", ),
-                                               ("proc", ),
-                                               ("macro", ),
-                                               ("tmacro", ),
-                                               ("list", ),,
-                                               ("app", ),,
-                                               ("apply", )],
-                        precedenceList = IntMap.fromList [(0, "("),
-                                                          (1, ")"),
-                                                          (, "["),
-                                                          (, "]"),
-                                                          (, "{"),
-                                                          (, "}"),
-                                                          (, ","),
-                                                          (, ":"),
-                                                          (, "eval"),
-                                                          (, "proc"),
-                                                          (, "macro"),
-                                                          (, "tmacro"),
-                                                          (, "list"),
-                                                          (, "app"),
-                                                          (, "apply")]}
+initialEvalState = ES { valMap = Map.fromList [("->", ),
+                                               ("=" , ),
+                                               ("in", )]
+                      , precedenceList = IntMap.fromList [("->", 5),
+                                                          ("=" , 0),
+                                                          ("in", 1)]}
 
 execute :: (Proxy p) => () -> Consumer (StateP EvalState p) Text IO ()
 execute () = do 

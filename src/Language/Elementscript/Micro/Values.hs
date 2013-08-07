@@ -18,18 +18,19 @@ data Val = Primitive PrimVal
          | TextMacro (Text -> IO Val) deriving (Typeable, Generic)
 
 data PrimVal = PrimInt Integer
-             | PrimText Text deriving (Eq, Ord, Typeable, Data, Generic)
+             | PrimString Text
+             deriving (Eq, Ord, Typeable, Data, Generic)
 
 instance Show PrimVal where
   showsPrec d (PrimInt i) = showsPrec d i
-  showsPrec d (PrimText t) = showsPrec d $ Text.unpack t
+  showsPrec d (PrimString t) = showsPrec d $ Text.unpack t
 
 instance Read PrimVal where
-  readPrec = fmap PrimInt readPrec +++ fmap (PrimText . Text.pack) readPrec
+  readPrec = fmap PrimInt readPrec +++ fmap (PrimString . Text.pack) readPrec
   readListPrec = readListPrecDefault
 
 instance IsString PrimVal where
-  fromString = PrimText . Text.pack
+  fromString = PrimString . Text.pack
 
 data OpTree = Variable Text
             | PrimValue PrimVal

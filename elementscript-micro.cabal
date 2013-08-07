@@ -23,5 +23,5 @@ library
 executable escpt-mu
   hs-source-dirs:      src
   main-is:             Main.hs
-  build-depends:       base, text, pipes, containers, elementscript-micro
+  build-depends:       base, text, pipes, elementscript-micro
   ghc-options:         -Wall
