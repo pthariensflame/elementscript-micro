@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStringsDeriveDataTypeable, DeriveGeneric, GADTs, DataKinds, KindSignatures #-}
 module Language.Elementscript.Micro (-- * Simple Interface
                                      initialEvalState,
                                      execute,
@@ -23,19 +23,34 @@ import Control.Proxy
 import Control.Proxy.Trans.State
 import Language.Elementscript.Micro.Values
 
+data ValType = VarOnly | FullVal
+
+data Val :: ValType -> ValType -> * where
+     Function :: (Val a b -> IO (Val b)) -> Val FullVal b
+     Lambda
+
+data OpTree :: ValType -> * where
+     Variable     :: {                        varName   :: Text                           } -> OpTree
+     FullApp      :: { leftSubtree :: OpTree, opSubtree :: OpTree, rightSubtree :: OpTree } -> OpTree
+     LeftSection  :: { leftSubtree :: OpTree, opSubtree :: OpTree                         } -> OpTree
+     RightSection :: {                        opSubtree :: OpTree, rightSubtree :: OpTree } -> OpTree
+
 data EvalState = ES { valMap :: Map Text (EvalState -> IO (Val, EvalState)),
                       precedenceList :: IntMap Text }
 
 initialEvalState :: EvalState
-initialEvalState = ES { valMap = Map.fromList [("->", ),
-                                               ("=" , ),
-                                               ("in", )]
-                      , precedenceList = IntMap.fromList [("->", 5),
-                                                          ("=" , 0),
-                                                          ("in", 1)]}
+initialEvalState = ES { valMap = Map.fromList [ ("->", )
+                                              , ("=" , )
+                                              , ("in", )
+                                              ]
+                      , precedenceList = IntMap.fromList [ (0 , "->")
+                                                         , (60, "=" )
+                                                         , (50, "in")
+                                                         ]
+                      }
 
 execute :: (Proxy p) => () -> Consumer (StateP EvalState p) Text IO ()
-execute () = do 
+execute () = do x <- request ()
 
 stdinST :: (Proxy p) => () -> Producer p Text IO r
 stdinST () = runIdentityP . forever $ do str <- lift Text.getLine
