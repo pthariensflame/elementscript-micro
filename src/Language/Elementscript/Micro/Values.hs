@@ -6,8 +6,7 @@ import Data.Text (Text)
 import qualified Data.Text as Text
 import Data.String (IsString(..))
 import Data.Map.Strict (Map)
-import qualified Data.Map.Strict as Map
-import Text.Show
+--import qualified Data.Map.Strict as Map
 import Text.Read
 import Data.Data
 import GHC.Generics
@@ -34,10 +33,10 @@ instance IsString PrimVal where
 
 data OpTree = Variable Text
             | PrimValue PrimVal
-            | FullApp { leftSubtree :: OpTree, 
-                        opSubtree :: OpTree,
-                        rightSubtree :: OpTree }
-            | LeftSection { leftSubtree :: OpTree, 
-                            opSubtree :: OpTree }
-            | RightSection { opSubtree :: OpTree,
-                             rightSubtree :: OpTree } deriving (Eq, Read, Show, Typeable, Data, Generic)
+            | FullApp      { leftSubtree  :: OpTree 
+                           , opSubtree    :: OpTree
+                           , rightSubtree :: OpTree }
+            | LeftSection  { leftSubtree  :: OpTree 
+                           , opSubtree    :: OpTree }
+            | RightSection { opSubtree    :: OpTree
+                           , rightSubtree :: OpTree } deriving (Eq, Read, Show, Typeable, Data, Generic)

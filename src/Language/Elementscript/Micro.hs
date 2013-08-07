@@ -27,7 +27,7 @@ data EvalState = ES { valMap :: Map Text (EvalState -> IO (Val, EvalState)),
                       precedenceList :: IntMap Text }
 
 initialEvalState :: EvalState
-initialEvalState = ES { varMap = Map.fromList [("(", ),
+initialEvalState = ES { valMap = Map.fromList [("(", ),
                                                (")", ),
                                                ("[", ),
                                                ("]", ),
