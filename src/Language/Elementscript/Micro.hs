@@ -20,31 +20,30 @@ import Language.Elementscript.Micro.Values
 
 data Val :: * where
      Function :: (Val -> State EvalState Val) -> Val
-     Lambda   ::                                           Val
-     Declare  ::                                           Val
-     Eval     ::                                           Val
-
-data EvalTree :: * where
-     Identifier   :: {                          identName :: Text                               } -> EvalTree
-     FullApp      :: { leftSubtree :: EvalTree, opSubtree :: EvalTree, rightSubtree :: EvalTree } -> EvalTree
-     LeftSection  :: { leftSubtree :: EvalTree, opSubtree :: EvalTree                           } -> EvalTree
-     RightSection :: {                          opSubtree :: EvalTree, rightSubtree :: EvalTree } -> EvalTree
+     Lambda   ::                                 Val
+     Declare  ::                                 Val
+     In       ::                                 Val
+     WithPrec ::                                 Val
 
 data EvalState = ES { valMap :: Map Text Val),
                       precedenceList :: IntMap Text }
 
 initialEvalState :: EvalState
-initialEvalState = ES { valMap = Map.fromList [ ("->", )
-                                              , ("=" , )
-                                              , ("in", )
+initialEvalState = ES { valMap = Map.fromList [ ("->"  , Lambda  )
+                                              , ("="   , Declare )
+                                              , ("in"  , In      )
+                                              , ("prec", WithPrec)
                                               ]
-                      , precedenceList = IntMap.fromList [ (0 , "->")
-                                                         , (60, "=" )
-                                                         , (50, "in")
-                                                         ]
+                      , precedenceMap = IntMap.fromList [ (0  , "->"  )
+                                                        , (100, "="   )
+                                                        , (300, "in"  )
+                                                        , (200, "prec")
+                                                        ]
                       }
 
-lookupId :: State EvalState
+lookupId :: Text State EvalState Val
+lookupId = do 
 
-evaluate :: Seq Text -> State EvalState Seq Text
-evaluate input state = 
+evaluate :: Seq Text -> State EvalState (Seq Text)
+evaluate input = do ES vM pM <- get
+                    case 
