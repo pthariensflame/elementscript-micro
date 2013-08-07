@@ -17,11 +17,11 @@ library
   hs-source-dirs:      src
   exposed-modules:     Language.Elementsong.Micro,
                        Language.Elementsong.Micro.Values
-  build-depends:       base, text, pipes, containers
+  build-depends:       base, text, containers
   ghc-options:         -Wall
 
 executable escpt-mu
   hs-source-dirs:      src
   main-is:             Main.hs
-  build-depends:       base, text, pipes, elementscript-micro
+  build-depends:       base, text, elementscript-micro
   ghc-options:         -Wall
