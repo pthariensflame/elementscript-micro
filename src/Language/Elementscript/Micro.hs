@@ -1,12 +1,8 @@
-{-# LANGUAGE OverloadedStrings, GADTSyntax, KindSignatures #-}
 module Language.Elementscript.Micro (initialEvalState,
                                      EvalState(..),
                                      evaluate,
-                                     Val(..),
-                                     EvalTree(..),
-                                     -- * Text/Pipes Utilities
-                                     stdinST,
-                                     stdoutDT) where
+                                     Val(..),) where
+import Control.Monad.State
 import Data.Text (Text)
 import qualified Data.Text as Text
 import Data.String (IsString(..))
@@ -16,7 +12,6 @@ import Data.IntMap.Strict (IntMap)
 import qualified Data.IntMap.Strict as IntMap
 import Data.Sequence (Seq)
 import qualified Data.Sequence as Seq
-import Language.Elementscript.Micro.Values
 
 data Val :: * where
      Function :: (Val -> State EvalState Val) -> Val
@@ -25,8 +20,8 @@ data Val :: * where
      In       ::                                 Val
      WithPrec ::                                 Val
 
-data EvalState = ES { valMap :: Map Text Val),
-                      precedenceList :: IntMap Text }
+data EvalState = ES { valMap :: Map Text Val,
+                      precedenceMap :: IntMap Text }
 
 initialEvalState :: EvalState
 initialEvalState = ES { valMap = Map.fromList [ ("->"  , Lambda  )
@@ -41,9 +36,9 @@ initialEvalState = ES { valMap = Map.fromList [ ("->"  , Lambda  )
                                                         ]
                       }
 
-lookupId :: Text State EvalState Val
-lookupId = do 
+lookupId :: Text -> State EvalState Val
+lookupId = undefined
 
 evaluate :: Seq Text -> State EvalState (Seq Text)
 evaluate input = do ES vM pM <- get
-                    case 
+                    undefined
