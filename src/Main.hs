@@ -1,10 +1,13 @@
-{-# LANGUAGE TypeHoles #-}
 module Main (main) where
-import           Data.Text.Lazy               hiding (map)
+import           Data.Text.Lazy
 import           Data.Text.Lazy.IO
 import           Language.Elementscript.Micro
-import           Prelude                      hiding (interact, unwords, words)
+import           Prelude                      hiding (getContents)
+import           System.IO                    (stderr)
 import           Text.Parsec
+import           Text.Parsec.Text.Lazy
 
 main :: IO ()
-main = interact $ \input -> unwords . runParser _ _ "stdin" $ words input
+main = getContents >>= runParserT evaluate initialEvalState "" >>= \case
+    Left err -> hPutStrLn stderr . pack $ show err
+    Right () -> return ()

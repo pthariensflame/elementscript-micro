@@ -1,8 +1,8 @@
-{-# LANGUAGE TypeHoles         #-}
-{-# OPTIONS_GHC -fdefer-type-errors #-}
+{-# LANGUAGE TypeHoles #-}
 module Language.Elementscript.Micro (initialEvalState,
                                      EvalState(..),
                                      evaluate) where
+import           Control.Applicative
 import           Control.Monad.Error.Class
 import           Control.Monad.Reader.Class
 import           Control.Monad.State.Class
@@ -16,17 +16,13 @@ import qualified Data.Sequence              as Seq
 import           Data.String                (IsString (..))
 import           Data.Text.Lazy             (Text)
 import qualified Data.Text.Lazy             as Text
-import           Text.Parsec
+import           Text.Parsec                hiding ((<|>))
+import           Text.Parsec.Text.Lazy
 
 data EvalState = ES {}
 
-evaluate :: [Text] -> State EvalState [Text]
-evaluate = _ . breakIntoDecls
+evaluate :: ParsecT Text EvalState IO ()
+evaluate = do _
 
 initialEvalState :: EvalState
-initialEvalState = _
-
-breakIntoDecls :: [Text] -> ([Decl], Text)
-breakIntoDecls input = _
-
-data Decl = Decl { declName :: Text, declVars :: Seq Text, declDef :: Text }
+initialEvalState = ES {}

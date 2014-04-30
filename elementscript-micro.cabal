@@ -17,11 +17,11 @@ library
   exposed-modules:     Language.Elementscript.Micro
   build-depends:       base, text, containers, parsec
   ghc-options:         -Wall
-  extensions:          OverloadedStrings
+  extensions:          OverloadedStrings, LambdaCase
 
-executable escpt-mu
+executable esmu
   hs-source-dirs:      src
   main-is:             Main.hs
   build-depends:       base, text, containers, parsec, elementscript-micro
   ghc-options:         -Wall
-  extensions:          OverloadedStrings
+  extensions:          OverloadedStrings, LambdaCase

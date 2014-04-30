@@ -10,5 +10,7 @@ version: 1
 extra-packages: ''
 ghc-args:
 - -Wall
+- -XLambdaCase
+- -fno-warn-unused-do-bind
 excluded-modules:
 - Setup.hs
