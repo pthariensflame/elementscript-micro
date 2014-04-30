@@ -1,11 +1,10 @@
+{-# LANGUAGE TypeHoles #-}
 module Main (main) where
-import Prelude hiding (interact, words, unwords)
-import Data.Text.Lazy
-import Data.Text.Lazy.IO
-import qualified Data.Sequence as Seq
-import Control.Monad.State
-import Data.Foldable (fold, toList)
-import Language.Elementscript.Micro
+import           Data.Text.Lazy               hiding (map)
+import           Data.Text.Lazy.IO
+import           Language.Elementscript.Micro
+import           Prelude                      hiding (interact, unwords, words)
+import           Text.Parsec
 
 main :: IO ()
-main = interact $ \input -> unwords . toList . flip evalState initialEvalState . evaluate . Seq.fromList $ words input
+main = interact $ \input -> unwords . runParser _ _ "stdin" $ words input

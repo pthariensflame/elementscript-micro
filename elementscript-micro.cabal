@@ -7,7 +7,7 @@ license:             BSD3
 license-file:        LICENSE
 author:              Alexander Altman
 maintainer:          alexanderaltman@me.com
-copyright:           Copyright (c) 2013, Alexander Altman
+copyright:           Copyright (c) 2013-2014, Alexander Altman
 category:            Language
 build-type:          Simple
 cabal-version:       >= 1.8
@@ -15,11 +15,13 @@ cabal-version:       >= 1.8
 library
   hs-source-dirs:      src
   exposed-modules:     Language.Elementscript.Micro
-  build-depends:       base, text, containers
+  build-depends:       base, text, containers, parsec
   ghc-options:         -Wall
+  extensions:          OverloadedStrings
 
 executable escpt-mu
   hs-source-dirs:      src
   main-is:             Main.hs
-  build-depends:       base, text, elementscript-micro
+  build-depends:       base, text, containers, parsec, elementscript-micro
   ghc-options:         -Wall
+  extensions:          OverloadedStrings
