@@ -10,4 +10,4 @@ import           Text.Parsec.Text.Lazy
 main :: IO ()
 main = getContents >>= runParserT evaluate initialEvalState "" >>= \case
     Left err -> hPutStrLn stderr . pack $ show err
-    Right () -> return ()
+    Right val -> return . prettyPrint $ normalize val

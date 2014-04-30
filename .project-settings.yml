@@ -3,6 +3,8 @@ module-template: ! 'module MODULE_NAME where
 '
 extensions:
   OverloadedStrings: true
+  GADTs: true
+  KindSignatures: true
 environment: ghc-7.8-unstable
 cabal-file: project.cabal
 hidden-packages: ''

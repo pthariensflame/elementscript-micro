@@ -17,7 +17,7 @@ library
   exposed-modules:     Language.Elementscript.Micro
   build-depends:       base, text, containers, parsec
   ghc-options:         -Wall
-  extensions:          OverloadedStrings, LambdaCase
+  extensions:          OverloadedStrings, GADTs, KindSignatures
 
 executable esmu
   hs-source-dirs:      src
