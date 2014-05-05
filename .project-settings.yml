@@ -4,7 +4,9 @@ module-template: ! 'module MODULE_NAME where
 extensions:
   OverloadedStrings: true
   GADTs: true
+  TypeOperators: true
   KindSignatures: true
+  RankNTypes: true
 environment: ghc-7.8-unstable
 cabal-file: project.cabal
 hidden-packages: ''
@@ -14,5 +16,6 @@ ghc-args:
 - -Wall
 - -XLambdaCase
 - -fno-warn-unused-do-bind
+- -XDataKinds
 excluded-modules:
 - Setup.hs
