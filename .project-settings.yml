@@ -3,10 +3,14 @@ module-template: ! 'module MODULE_NAME where
 '
 extensions:
   OverloadedStrings: true
+  DeriveFoldable: true
   GADTs: true
   TypeOperators: true
+  DeriveFunctor: true
   KindSignatures: true
+  DeriveDataTypeable: true
   RankNTypes: true
+  DeriveTraversable: true
 environment: ghc-7.8-unstable
 cabal-file: project.cabal
 hidden-packages: ''
@@ -17,5 +21,6 @@ ghc-args:
 - -XLambdaCase
 - -fno-warn-unused-do-bind
 - -XDataKinds
+- -XDeriveGeneric
 excluded-modules:
 - Setup.hs

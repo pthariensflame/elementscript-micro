@@ -2,6 +2,7 @@ name:                elementscript-micro
 version:             0.0.0.0
 stability:           alpha
 synopsis:            A minimal Elementscript variant with which to experiment with infix homoiconicity.
+description:         A minimal Elementscript variant with which to experiment with infix homoiconicity.
 homepage:            https://github.com/pthariensflame/elementscript-micro
 license:             BSD3
 license-file:        LICENSE
@@ -15,13 +16,13 @@ cabal-version:       >= 1.8
 library
   hs-source-dirs:      src
   exposed-modules:     Language.Elementscript.Micro
-  build-depends:       base, text, containers, parsec
+  build-depends:       base, text, containers, parsec, bound
   ghc-options:         -Wall
-  extensions:          OverloadedStrings, GADTs, KindSignatures, DataKinds, TypeOperators, RankNTypes
+  extensions:          OverloadedStrings, GADTs, KindSignatures, DataKinds, TypeOperators, RankNTypes, DeriveDataTypeable, DeriveFunctor, DeriveFoldable, DeriveTraversable, DeriveGeneric
 
 executable esmu
   hs-source-dirs:      src
   main-is:             Main.hs
-  build-depends:       base, text, containers, parsec, elementscript-micro
+  build-depends:       base, text, containers, parsec, bound, elementscript-micro
   ghc-options:         -Wall
   extensions:          OverloadedStrings, LambdaCase
