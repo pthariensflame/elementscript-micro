@@ -11,9 +11,8 @@ extensions:
   DeriveDataTypeable: true
   RankNTypes: true
   DeriveTraversable: true
-environment: ghc-7.8-unstable
+environment: ghc-7.8-stable-14.09
 cabal-file: project.cabal
-hidden-packages: ''
 version: 1
 extra-packages: ''
 ghc-args:
